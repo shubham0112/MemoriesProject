@@ -7,6 +7,9 @@ import Icon from './Icon';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import useStyles from './styles';
 import Input from './Input';
+import {signin,signup} from '../../actions/auth';
+
+const initialState = {firstName:'',lastName:'',email:'',password:'',confirmPassword:''};
 
 const Auth = () => {
     const classes = useStyles();
@@ -15,16 +18,25 @@ const Auth = () => {
     const dispatch = useDispatch();
     const history = useHistory();
 
+    const [formData,setFormData] = useState(initialState);
+
     const handleShowPassword = () => {
         setShowPassword((prevShowPassword)=>!prevShowPassword)
     }
 
-    const handleSubmit = () => {
-
+    // this is for our jwt login
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        
+        if(isSignUp){
+            dispatch(signup(formData,history));
+        }else{
+            dispatch(signin(formData,history));
+        }
     };
 
-    const handleChange = () => {
-
+    const handleChange = (e) => {
+        setFormData({...formData, [e.target.name]:e.target.value });
     };
 
     const switchMode = () => {
@@ -32,6 +44,7 @@ const Auth = () => {
         setShowPassword(false);
     };
 
+    // google o auth
     const googleSuccess = async (res) => {
         const result = res?.profileObj; //optional chaining operator
         const token = res?.tokenId;

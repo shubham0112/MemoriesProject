@@ -1,6 +1,7 @@
 import React,{ useState, useEffect } from 'react';
 import {AppBar,Avatar,Button,Toolbar,Typography} from '@material-ui/core';
 import {useDispatch} from 'react-redux';
+import decode from 'jwt-decode';
 import useStyles from './styles';
 import memories from '../../images/memories.png';
 import {Link,useHistory,useLocation} from 'react-router-dom';
@@ -26,7 +27,14 @@ const NavBar = () => {
     useEffect(()=>{
         const token = user?.token;
 
-        // JWT...
+        if(token){
+            const decodedToken = decode(token);
+
+            // checking whether token expired or not
+            if(decodedToken.exp*1000 < new Date().getTime()){
+                logout();
+            }
+        }
 
         setUser(JSON.parse(localStorage.getItem('profile')));
     },[location]);

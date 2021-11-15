@@ -1,7 +1,7 @@
 import {FETCH_ALL,CREATE,UPDATE,DELETE,LIKE} from '../constants/actionTypes';
 import * as api from '../api';
 
-// Action Creators
+// Action Creators (i.e function which returns an action)
 
 // firstly we make api reuests i.e make changes in the database and then return it
 // then we dispatch the respective action to change the state (by calling the reducers) => this is for frontend
