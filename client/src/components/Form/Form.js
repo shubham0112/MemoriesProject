@@ -10,6 +10,8 @@ const Form = ({currentId,setCurrentId}) => {
         title:'',message:'',tags:'',selectedFile:'',
     });
 
+    // if there is current id then it means we are editing the already created post (since we are updating the currentId when that button (3 dots) is clicked (in post.js))
+    // so we are retreiving the old post data from the state 
     const post = useSelector((state)=> currentId ? state.posts.find((p) => p._id===currentId) : null );
 
     const classes = useStyles();

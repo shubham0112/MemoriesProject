@@ -11,6 +11,26 @@ export const getPosts = async (req, res) => {
     }
 }
 
+// QUERY  -> /posts?page=1  -> page = 1
+// PARAMS -> /posts/123   -> id = 123
+
+export const getPostsBySearch = async (req,res) => {
+    const {searchQuery,tags} = req.query;
+
+    try {
+        const title = new RegExp(searchQuery,'i');
+
+        // find the posts which match one of those two criteria => title or tags
+        // now since we have sent tags as string we need to split it now  
+        const posts = await PostMessage.find({ $or: [ {title}, {tags: { $in: tags.split(',') } } ] });
+
+        res.json({data:posts});
+    } catch (error) {
+        console.log(error);
+        res.status(404).json({messsage:error.message});
+    }
+}
+
 export const createPost = async (req,res) => {
     const post = req.body;
 

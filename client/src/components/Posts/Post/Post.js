@@ -15,7 +15,7 @@ const Post=({post, setCurrentId}) => {
     const user = JSON.parse(localStorage.getItem('profile'));
 
     return (
-        <Card className={classes.card}>
+        <Card className={classes.card} raised elevation={6}>
             <CardMedia className={classes.media} image={post.selectedFile || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} title={post.title} />
 
             <div className={classes.overlay} >
@@ -27,6 +27,7 @@ const Post=({post, setCurrentId}) => {
                 </Typography>
             </div>
 
+            {/* if it is the same user who created the post only then display edit button */}
             {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
                 <div className={classes.overlay2}>
                     <Button style={{color:"white"}} size='small' onClick={()=>{setCurrentId(post._id)}} >
