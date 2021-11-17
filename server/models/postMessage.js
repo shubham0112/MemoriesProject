@@ -11,6 +11,7 @@ const postSchema = mongoose.Schema({
         type:[String], //it will store the user id's of user who liked the post
         default:[],
     },
+    comments: {type: [String], default: []},
     createdAt: {
         type:Date,
         default: new Date()
