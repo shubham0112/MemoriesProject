@@ -16,7 +16,7 @@ const Post=({post, setCurrentId}) => {
     const dispatch = useDispatch();
     const user = JSON.parse(localStorage.getItem('profile'));
     const history = useHistory();
-    const [likes,setLikes] = useState(post?.likes); 
+    const [likes,setLikes] = useState(post?.likes);
 
     const userId = user?.result.googleId || user?.result?._id;
     const hasLikedPost = post?.likes.find((like) => like === userId);
@@ -42,7 +42,7 @@ const Post=({post, setCurrentId}) => {
         }
     
         return <><ThumbUpAltOutlined fontSize="small" />&nbsp;Like</>;
-      };
+    };
 
     const openPost = () => {
         history.push(`/posts/${post._id}`);
@@ -63,15 +63,6 @@ const Post=({post, setCurrentId}) => {
                         {moment(post.createdAt).fromNow()}
                     </Typography>
                 </div>
-
-                {/* if it is the same user who created the post only then display edit button */}
-                {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
-                    <div className={classes.overlay2}>
-                        <Button style={{color:"white"}} size='small' onClick={()=>{setCurrentId(post._id)}} >
-                            <MoreHorizIcon fontSize='medium' />
-                        </Button>
-                    </div>
-                )}
 
                 <div className={classes.details}>
                     <Typography variant="body2" color="textSecondary" >
@@ -102,6 +93,15 @@ const Post=({post, setCurrentId}) => {
                         <DeleteIcon fontSize='small' />
                         Delete
                     </Button>
+                )}
+
+                {/* if it is the same user who created the post only then display edit button (3 dots) */}
+                {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
+                    <div className={classes.overlay2}>
+                        <Button style={{color:"white"}} size='small' onClick={()=>setCurrentId(post._id)} >
+                            <MoreHorizIcon fontSize='medium' />
+                        </Button>
+                    </div>
                 )}
             </CardActions>
         </Card>
